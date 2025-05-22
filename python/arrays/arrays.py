@@ -8,11 +8,10 @@ numbers = [1,2,3,4,5]
 # even_num = [num for num in numbers if num %2 == 0] Filter for even numbers
 #
 class CustomArray:
-    def __init__(self) -> None:
+    def __init__(self,capacity) -> None:
         self.length = 0          # Current number of elements
-        self.capacity = 1         # Current maximum capacity
+        self.capacity = capacity         # Current maximum capacity
         self.data = [None] * self.capacity  # Initialize storage
-
     def append(self, item) -> None:
         # If we're out of space, resize
         if self.length == self.capacity:
@@ -21,6 +20,25 @@ class CustomArray:
         # Add the item and increment length
         self.data[self.length] = item
         self.length += 1
+    def insert(self,index, item):
+        if self.length == self.capacity:
+            raise Exception('Array capacity reached')
+        if not 0 <= index <= self.length:
+            raise IndexError('Index out of bonds ')
+
+        for i in range(self.length, index, -1):
+            self.data[i]=self.data[i-1]
+        self.data[index] = item
+        self.length += 1
+    def remove(self,item):
+        for i in range(self.length):
+            if self.data[i] == item:
+                for j in range(i,self.length - 1):
+                    self.data[j] = self.data[j+1]
+                self.data[self.length - 1] = None
+                self.length -= 1
+                return
+        raise ValueError(f"{item} not found in the array")
 
     def _resize(self, new_capacity: int) -> None:
         """Private method to resize the underlying storage"""
@@ -67,11 +85,18 @@ class CustomArray:
             self._resize(self.capacity // 2)
 
         return item
+        # if self.length == 0:
+        #           raise IndexError("Cannot pop from an empty array")
+        #       last_element = self.data[self.length - 1]
+        #       self.data[self.length - 1] = None  # Optional: Clear the slot
+        #       self.length -= 1
+        #       return last_element
 
-arr = CustomArray()
+arr = CustomArray(4)
 arr.append(10)
 arr.append(20)
 arr.append(30)
+arr.append(40)
 
 print(arr)          # [10, 20, 30]
 print(len(arr))     # 3
@@ -81,4 +106,22 @@ arr[1] = 99
 print(arr[1])       # 99
 
 print(arr.pop())    # 30
+# arr.remove(40)
 print(arr)          # [10, 99]
+
+
+class MyClass:
+    class_attribute = 'Hello world'
+
+    def __init__(self,name,age):
+        self.name =name
+        self.age=age
+    def greet(self):
+        return f"Hi, my name is {self.name} and i'm {self.age} years old"
+
+obj1 = MyClass('Alice', 30)
+obj2 = MyClass('Yeabsra',20)
+
+# print(obj1.name)
+# print(obj2.age)
+# print(MyClass.class_attribute)
