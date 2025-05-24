@@ -147,7 +147,19 @@ class LinkedList {
     }
     return a.data;
   }
-  getKthFromStart(k) {}
+  getKthFromStart(k) {
+    if (k <= 0 || this.isEmpty()) {
+      throw new Error("Invalid input.");
+    }
+    let current = this.head;
+    let count = 1;
+
+    while (current && count < k) {
+      current = current.next;
+      count++;
+    }
+    return current.data;
+  }
   print() {
     // this.isEmpty();
     let itr = this.head;
