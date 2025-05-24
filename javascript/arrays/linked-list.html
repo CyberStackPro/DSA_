@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kth Node Visualizer</title>
+  <style>
+    body { font-family: sans-serif; background: #f8f9fa; padding: 20px; }
+    .list { display: flex; gap: 10px; margin-bottom: 20px; }
+    .node {
+      padding: 10px 20px;
+      border: 2px solid #333;
+      border-radius: 10px;
+      background: white;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .arrow::after {
+      content: '→';
+      margin-left: 5px;
+      font-size: 20px;
+    }
+    .pointer {
+      position: absolute;
+      top: -25px;
+      font-weight: bold;
+      color: white;
+      background: #007bff;
+      padding: 2px 5px;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+    .highlight {
+      background-color: #ffc107;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kth Node From End Visualizer</h1>
+  <div class="list" id="list"></div>
+  <button onclick="startWalkthrough(2)">Get 2nd From End</button>
+  <button onclick="startWalkthrough(3)">Get 3rd From End</button>
+  <button onclick="startWalkthrough(4)">Get 4th From End</button>
+
+  <script>
+    const values = [10, 20, 30, 40, 50];
+    const list = document.getElementById('list');
+
+    function renderList(aIndex = -1, bIndex = -1, highlight = -1) {
+      list.innerHTML = '';
+      values.forEach((val, index) => {
+        const node = document.createElement('div');
+        node.className = 'node arrow';
+        if (index === highlight) node.classList.add('highlight');
+
+        node.innerText = val;
+
+        if (index === aIndex) {
+          const aPtr = document.createElement('div');
+          aPtr.className = 'pointer';
+          aPtr.innerText = 'A';
+          node.appendChild(aPtr);
+        }
+        if (index === bIndex) {
+          const bPtr = document.createElement('div');
+          bPtr.className = 'pointer';
+          bPtr.innerText = 'B';
+          bPtr.style.top = '-45px';
+          node.appendChild(bPtr);
+        }
+        list.appendChild(node);
+      });
+    }
+
+    async function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function startWalkthrough(k) {
+      let a = 0, b = 0;
+      renderList(a, b);
+      await delay(800);
+
+      // Move B k-1 steps forward
+      for (let i = 0; i < k - 1; i++) {
+        b++;
+        renderList(a, b);
+        await delay(800);
+      }
+
+      // Move A and B until B hits the last node
+      while (b < values.length - 1) {
+        a++;
+        b++;
+        renderList(a, b);
+        await delay(800);
+      }
+
+      // Highlight the Kth node
+      renderList(a, b, a);
+    }
+
+    renderList();
+  </script>
+</body>
+</html>

@@ -13,9 +13,12 @@ class LinkedList {
   }
   addFirst(item) {
     let node = new Node(item);
-    if (this.head === null) this.tail = this.head = node;
-    node.next = this.head;
-    this.head = node;
+    if (this.head === null) {
+      this.tail = this.head = node;
+    } else {
+      node.next = this.head;
+      this.head = node;
+    }
     this.size++;
   }
 
@@ -108,8 +111,8 @@ class LinkedList {
   reverse() {
     let current = this.head;
     let prev = null;
-    let next;
     while (current != null) {
+      let next;
       console.log("Next In Loop: ", next);
 
       next = current.next;
@@ -118,9 +121,33 @@ class LinkedList {
       prev = current;
       current = next;
     }
+    this.tail = this.head;
+    this.tail.next = null;
     this.head = prev;
-    // return prev
   }
+  getKthFromTheEnd(k) {
+    if (k <= 0 || this.isEmpty()) {
+      throw new Error(
+        "Invalid input: k must be > 0 and list must not be empty."
+      );
+    }
+    let a = this.head;
+    let b = this.head;
+
+    for (let i = 0; i < k - 1; i++) {
+      b = b.next;
+      if (!b) {
+        throw new Error("k is larger than the length of the list.");
+      }
+    }
+
+    while (b != this.tail) {
+      a = a.next;
+      b = b.next;
+    }
+    return a.data;
+  }
+  getKthFromStart(k) {}
   print() {
     // this.isEmpty();
     let itr = this.head;
@@ -136,17 +163,26 @@ class LinkedList {
 
 const list = new LinkedList();
 
-list.addFirst(1);
-list.addFirst(2);
-list.addFirst(3);
+list.addFirst(10);
+list.addFirst(20);
+list.addFirst(30);
+list.addFirst(40);
+list.addFirst(50);
 
-list.addLast(4);
+// list.addLast(10);
+// list.addLast(20);
+// list.addLast(30);
+// list.addLast(40);
+// list.addLast(50);
+
+// list.addLast(4);
 
 // console.log(list.indexOf(4));
 // console.log(list.contains(5));
 // list.removeFirst();
 // list.removeLast();
-list.reverse();
+// list.reverse();
 list.print();
-console.log(list.toArray());
+console.log(list.getKthFromTheEnd(2));
+// console.log(list.toArray());
 // console.log();
