@@ -195,6 +195,8 @@ list.addFirst(50);
 // list.removeLast();
 // list.reverse();
 list.print();
-console.log(list.getKthFromTheEnd(2));
+// console.log(list.getKthFromTheEnd(2));
+console.log(list.getKthFromStart(2));
+
 // console.log(list.toArray());
 // console.log();
