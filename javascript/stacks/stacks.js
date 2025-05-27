@@ -5,26 +5,34 @@ class Stack {
   }
 
   push(item) {
+    // this.top += 1
     this.data[++this.top] = item;
-    // this.data.push(item);
   }
   pop() {
-    // if (this.data.length === 0) return "Oops, the stack is empty!";
-    // // this.data[--this.top];
-    // delete this.data[this.top];
-    // return this.data[this.top];
-    if (this.data.length === 0) return "Oops, the stack is empty!";
-    return this.data.pop();
+    if (this.top === -1) return "Oops, the stack is empty!";
+    const item = this.data[this.top];
+    this.data.length = this.top; // Optional cleanup
+    this.top--;
+    return item;
+  }
+  peek() {
+    return this.data[this.top];
   }
   empty() {
     return this.data.length === 0;
   }
 }
 const stack = new Stack();
-module.exports = Stack;
 // stack.push(10);
 // stack.push(20);
 // stack.push(30);
+// stack.pop();
+// // stack.pop();
+// // stack.pop();
+// console.log(stack);
+// console.log(stack.peek());
+
+module.exports = Stack;
 
 // console.log(stack.pop());
 // console.log(stack.empty());
