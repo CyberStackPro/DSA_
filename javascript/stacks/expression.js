@@ -42,7 +42,8 @@ class Expression {
   }
 }
 
-const expression = new Expression();
+// const expression = new Expression();
 
-console.log(expression.isBalanced("([)]"));
-console.log(expression.isBalanced("{[()]}"));
+// console.log(expression.isBalanced("([)]"));
+// console.log(expression.isBalanced("{[()]}"));
+module.exports = Expression;
