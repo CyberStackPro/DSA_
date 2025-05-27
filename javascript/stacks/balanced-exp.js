@@ -1,33 +1,48 @@
 const Stack = require("./stacks");
 
 class Expression {
+  closedBr = [")", ">", "]", "}"];
+  leftBr = ["(", "<", "[", "{"];
+  bracketPairs = {
+    ")": "(",
+    ">": "<",
+    "]": "[",
+    "}": "{",
+  };
+
   isBalanced(input) {
     const stack = new Stack();
 
     for (let ch of input) {
-      console.log("CH= ", ch);
-
-      if (ch === "(" || ch === "<" || ch === "[" || ch === "{") stack.push(ch);
-
-      if (ch === ")" || ch === "<" || ch === "[" || ch === "{") {
+      if (this.isLeftBracket(ch)) {
+        stack.push(ch);
+      } else if (this.isClosedBracket(ch)) {
         if (stack.empty()) return false;
 
-        stack.pop();
-        // let top = stack.pop(ch);
-        // if (
-        //   (ch === ")" && top != "(") ||
-        //   (ch === ">" && top != "<") ||
-        //   (ch === "]" && top != "[") ||
-        //   (ch === "}" && top != "{")
-        // )
-        //   return false;
+        const top = stack.pop(); // Correct: no argument
+        if (!this.bracketsMatch(top, ch)) {
+          return false;
+        }
       }
     }
-    console.log(stack);
-    return stack.empty();
+
+    return stack.empty(); // Must be empty for it to be balanced
+  }
+
+  isLeftBracket(ch) {
+    return this.leftBr.includes(ch);
+  }
+
+  isClosedBracket(ch) {
+    return this.closedBr.includes(ch);
+  }
+
+  bracketsMatch(opening, closing) {
+    return this.bracketPairs[closing] === opening;
   }
 }
 
 const expression = new Expression();
-console.log(expression.isBalanced("{1 + 2}}"));
-console.log(expression);
+
+console.log(expression.isBalanced("([)]"));
+console.log(expression.isBalanced("{[()]}"));
