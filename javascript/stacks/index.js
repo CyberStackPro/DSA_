@@ -20,9 +20,14 @@ function ask() {
       return;
     }
 
-    const result = expr.isBalanced(input) ? "✅ Balanced" : "❌ Not Balanced";
+    const result = expr.isBalanced(input);
 
-    console.log(result + "\n");
+    if (result.balanced) {
+      console.log("✅ Balanced\n");
+    } else {
+      console.log("❌ Not Balanced:");
+      console.log("   → " + result.error + "\n");
+    }
     ask(); // ask again
   });
 }
