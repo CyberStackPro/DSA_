@@ -19,10 +19,10 @@ class Stack {
     return this.data[this.top];
   }
   empty() {
-    return this.data.length === 0;
+    return this.top < 0;
   }
 }
-const stack = new Stack();
+// const stack = new Stack();
 // stack.push(10);
 // stack.push(20);
 // stack.push(30);

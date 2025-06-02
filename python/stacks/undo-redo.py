@@ -21,7 +21,7 @@ class TextEditor:
             print(f"Undo | Current text: '{self.text}'")
         else:
             print('Noting to undo')
-    def redo(self):
+    def redo(self):+
         if self.redo_stack:
             self.undo_stack.append(self.text)
             self.text = self.redo_stack.pop()
@@ -31,7 +31,9 @@ class TextEditor:
 
 
 editor = TextEditor()
-editor.type_text('Hello World')
-editor.delete_text(6)
+editor.type_text('Hello Ethiopia')
+editor.delete_text(3)
+editor.undo()
 editor.undo()
 editor.redo()
+
