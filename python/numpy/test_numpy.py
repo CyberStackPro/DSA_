@@ -110,7 +110,7 @@ top_left_box = grid[0:2, 0:2]
 # 11   .  .  .  .  .  .  .  .  .  .  .  .
 
 frame = np.arange(144).reshape(12, 12)
-print("Original Frame:\n", frame)
+# print("Original Frame:\n", frame)
 # 
 # The item is from row 3 up to (but not including) row 8,
 # and from column 3 up to (but not including) column 8.
@@ -120,6 +120,15 @@ x_start, x_end = 3, 8
 
 cropped_item = frame[y_start:y_end, x_start:x_end]
 
-print("\nCropped Item:\n", cropped_item)
+# print("\nCropped Item:\n", cropped_item)
 
 # cropped = frame[___:___, ___:___]
+a=np.array([
+[1,2,3,4],
+[5,6,7,8],
+[9,10,11,12],
+[19,120,21,52],
+
+
+])
+print(a[2:4,1:4])
