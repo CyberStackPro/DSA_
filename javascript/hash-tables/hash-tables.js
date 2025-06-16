@@ -66,3 +66,29 @@ function simpleHash(key, tableSize) {
 // console.log(simpleHash("123456", 100));
 const string = "pranges";
 console.log("lll: ", string.charCodeAt());
+
+// 1. Create a hash map
+const userProfile = new Map();
+
+// 2. Insert / Update a key-value pair
+userProfile.set("username", "brian");
+userProfile.set("level", 10);
+userProfile.set("tags", ["dev", "cybersec"]);
+
+userProfile.set("level", 11); // Updates the value
+// console.log("Updated profile:", userProfile);
+
+// console.log("Initial profile:", userProfile);
+
+// 3. Get a value by its key
+const level = userProfile.get("level");
+// console.log(`Level: ${level}`);
+
+// 4. Check if a key exists
+// if (userProfile.has("tags")) {
+//   console.log("Tags key exists.");
+// }
+
+// 5. Delete a key-value pair
+userProfile.delete("tags");
+// console.log("Final profile:", userProfile);

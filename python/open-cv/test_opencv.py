@@ -202,7 +202,7 @@ pose = mp_pose.Pose()
 mp_drawing = mp.solutions.drawing_utils
 
 # Initialize the Video Capture
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('video/person-1.mp4')
 
 if not cap.isOpened():
     print("Error: Cannot open camera.")
@@ -267,3 +267,56 @@ else:
 
 cap.release()
 cv2.destroyAllWindows()
+
+blank = np.zeros((500,500,3), dtype="uint8")
+
+# cv2.imshow("Blank", blank)
+
+# # blank[200:300, 300:400] = 0,255,0
+# # cv2.imshow('Green', blank)
+
+# # draw rectangle
+# cv2.rectangle(blank, (0,0), (blank.shape[1]//2, blank.shape[0]//2), (0,255,0), thickness=cv2.FILLED)
+# cv2.imshow("Rectangle", blank)
+
+# cv2.circle(blank, (blank.shape[1]//2, blank.shape[0]//2), 40, (0,0,255), thickness=2)
+# cv2.imshow("Circle", blank)
+# # img = cv2.imread('test_image.png')
+
+# cv2.line(blank, (100,100), (300,400), (255,0,0), thickness=3)
+# cv2.imshow('Line', blank)
+
+
+# cv2.putText(blank, 'Hello', (255,255), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0,255,0), 2)
+# cv2.imshow("Text", blank)
+
+# cv2.waitKey(0)
+
+
+# capture = cv2.VideoCapture(0)
+
+
+# def rescaleFrame(frame, scale=0.75):
+#     width = int(frame.shape[1] * scale)
+#     height = int(frame.shape[0] * scale)
+
+#     dimensions = (width, height)
+
+#     return cv2.resize(frame, dimensions, interpolation=cv2.INTER_AREA)
+
+# def changeRes(width,height):
+#     capture.set(3,width)
+#     capture.set(4, height)
+
+# while True:
+#     isTrue, frame =  capture.read()
+
+#     frame_resized = rescaleFrame(frame)
+
+#     cv2.imshow('Video',frame)
+#     # cv2.imshow('Video Resized', frame_resized)
+
+#     if cv2.waitKey(20) & 0xFF==ord('q'):
+#         break
+# capture.release()
+# cv2.destroyAllWindows()
