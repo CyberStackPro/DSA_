@@ -86,6 +86,69 @@ class LinkedList {
     // this.size--;
     // return removed;
   }
+  remove(item) {
+    if (this.isEmpty()) {
+      throw new Error("List is empty.");
+    }
+
+    if (this.head.data === item) {
+      this.removeFirst();
+    }
+
+    let current = this.head;
+    let prev = null;
+
+    while (current !== null && current.data !== item) {
+      prev = current;
+      current = current.next;
+    }
+
+    if (current === null) {
+      throw new Error("list is empty on the current state.");
+    }
+    prev.next = current.next;
+
+    if (current === this.tail) {
+      this.tail = prev;
+    }
+
+    current.next = null;
+    this.size--;
+  }
+
+  removeEntry(key) {
+    if (this.isEmpty()) {
+      throw new Error("list is empty");
+    }
+
+    // Case 1: Entry to remove is the head
+    if (this.head.data.key === key) {
+      this.removeFirst();
+    }
+
+    // Case 2: Entry is in the middle or at the tail
+    let current = this.head;
+    let prev = null;
+
+    while (current !== null && current.data.key !== key) {
+      prev = current;
+      current = current.next;
+    }
+
+    if (current === null) {
+      // Key not found
+      throw new Error("key not found");
+    }
+
+    prev.next = current.next;
+    if (current === this.tail) {
+      // If the removed node was the tail
+      this.tail = prev;
+    }
+    current.next = null;
+    this.size--;
+  }
+
   toArray() {
     let array = [];
     let current = this.head;
@@ -173,13 +236,15 @@ class LinkedList {
   }
 }
 
-const list = new LinkedList();
+module.exports = { LinkedList };
 
-list.addFirst(10);
-list.addFirst(20);
-list.addFirst(30);
-list.addFirst(40);
-list.addFirst(50);
+// const list = new LinkedList();
+
+// list.addFirst(10);
+// list.addFirst(20);
+// list.addFirst(30);
+// list.addFirst(40);
+// list.addFirst(50);
 
 // list.addLast(10);
 // list.addLast(20);
@@ -194,9 +259,9 @@ list.addFirst(50);
 // list.removeFirst();
 // list.removeLast();
 // list.reverse();
-list.print();
+// list.print();
 // console.log(list.getKthFromTheEnd(2));
-console.log(list.getKthFromStart(2));
+// console.log(list.getKthFromStart(2));
 
 // console.log(list.toArray());
 // console.log();
