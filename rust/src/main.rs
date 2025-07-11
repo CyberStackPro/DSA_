@@ -2,6 +2,12 @@ use std::any::type_name;
 use std::collections::HashMap;
 
 // mod ./hashash-maps
+
+mod arrays;
+mod code_wars;
+
+mod tree;
+
 fn main() {
     // let numbers: i32 = 32;
     // println!("Hello, world!");
