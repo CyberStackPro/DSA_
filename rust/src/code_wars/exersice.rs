@@ -35,8 +35,15 @@ fn spin_words2(words: &str) -> String {
 // }
 
 fn main() {
-    let result = spin_words("Hey wollef sroirraw");
-    println!("{}", result);
+    // let result = spin_words("Hey wollef sroirraw");
+    // println!("{}", result);
+
+    let s = "The quick brown fox jumps over the lazy dog";
+    if check_pangram(s) {
+        println!("true");
+    } else {
+        println!("false");
+    }
 }
 
 fn is_narcissistic(num: u64) -> bool {
@@ -66,3 +73,12 @@ fn is_narcissistic(num: u64) -> bool {
 
 //     sum == num
 // }
+fn check_pangram(s: &str) -> bool {
+    let lower = s.to_lowercase();
+    for ch in 'a'..='z' {
+        if !lower.contains(ch) {
+            return false;
+        }
+    }
+    true
+}

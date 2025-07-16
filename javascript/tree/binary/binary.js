@@ -124,11 +124,18 @@ class BinaryTree {
     );
   }
 
-  validateBST(node = this.root, left, right) {
-    if (node.left === null && node.right === null) return 0;
+  isBinaryST(node = this.root, min = -Infinity, max = Infinity) {
+    if (node === null) return true;
 
-    const leftChild = this.validateBST(node, node.left, node.right);
+    if (node.value < min || node.value > max) return false;
+
+    return (
+      this.isBinaryST(node.left, min, node.value - 1) &&
+      this.isBinaryST(node.right, node.value + 1, max)
+    );
   }
+
+  getNodesAtDistance() {}
 }
 
 const binary = new BinaryTree();
@@ -136,6 +143,8 @@ binary.insert(7);
 binary.insert(4);
 binary.insert(9);
 binary.insert(1);
+binary.insert(2);
+
 binary.insert(6);
 binary.insert(8);
 binary.insert(10);
@@ -149,7 +158,9 @@ tree.insert(6);
 tree.insert(8);
 tree.insert(10);
 
-console.log(binary.equals(binary.root, tree.root));
+// console.log(binary.equals(binary.root, tree.root));
+
+console.log(binary.isBinaryST());
 
 // binary.insert(100);
 // binary.insert(5);
