@@ -35,27 +35,76 @@ class AVLTree {
 
   //   return y;
   // }
-  rotateLeft(node = this.root) {
-    let newRoot = node.right;
+  /* 
+    | Variable | Meaning                         | Value                         |
+    | -------- | ------------------------------- | ----------------------------- |
+    | `z`      | the unbalanced node             | 10                            |
+    | `y`      | z.left (child of z)             | 20                            |
+    | `T3`     | y.right (will be subtree moved) | `null` (right of 20 is empty) |
+  */
+  rotateLeft(z) {
+    const y = z.right; // y = 20
+    const T2 = y.left; // T2 = null
 
-    this.root.right = newRoot.left;
-    newRoot.left = node;
+    y.left = z; // y.left = null now it become 10,  20.left = 10
 
-    setHeight(node);
-    setHeight(newRoot);
+    z.right = T2; // 10.right = null
 
-    return newRoot;
+    this.setHeight(z);
+    this.setHeight(y);
+
+    return y;
+
+    // let newRoot = node.right;
+
+    // node.right = newRoot.left;
+    // newRoot.left = node;
+
+    // this.setHeight(node);
+    // this.setHeight(newRoot);
+
+    // return newRoot;
   }
-  rotateRight(node = this.root) {
-    let newRoot = node.left;
 
-    this.root.left = newRoot.left;
-    newRoot.right = node;
+  /* 
+    | Variable | Meaning                         | Value                         |
+    | -------- | ------------------------------- | ----------------------------- |
+    | `z`      | the unbalanced node             | 30                            |
+    | `y`      | z.left (child of z)             | 20                            |
+    | `T3`     | y.right (will be subtree moved) | `null` (right of 20 is empty) |
+  */
+  rotateRight(z) {
+    const y = z.left;
+    const T3 = y.right;
 
-    setHeight(node);
-    setHeight(newRoot);
+    // 20.right = 30
+    y.right = z;
 
-    return newRoot;
+    // 30.left = null (because T3 = null)
+    z.left = T3;
+
+    /* 
+    30->20->10
+
+        30       20
+      20      10  30
+    10
+
+    */
+
+    this.setHeight(z);
+    this.setHeight(y);
+
+    return y;
+    // let newRoot = node.left;
+
+    // node.left = newRoot.left;
+    // newRoot.right = node;
+
+    // this.setHeight(node);
+    // this.setHeight(newRoot);
+
+    // return newRoot;
   }
   setHeight(node = this.root) {
     return (node.height =
@@ -76,39 +125,65 @@ class AVLTree {
     node.height =
       1 + Math.max(this.getHeight(node.left), this.getHeight(node.right));
 
-    return this._balance(node);
-    // return node;
+    node = this._balance(node);
+    // return (node = this._balance(node));
+    return node;
   }
 
   _balance(node) {
-    const balance = this.getBalance(node);
+    // const balance = this.getBalance(node);
 
-    if (balance > 1) {
-      if (this.getBalance(node.left) < 0) {
-        console.log("Left-Right case on:", node.left.value);
-        node.left = this.rotateLeft(node.left);
-        // Perform Left-Right rotation
-        console.log("Right rotation on:", node.value);
-        return this.rotateRight(node);
-      }
-    } else if (balance < -1) {
-      if (this.getBalance(node.right) > 0) {
-        console.log("Right-Left case on:", node.right.value);
-        node.right = this.rotateRight(node.right);
-        // Perform Right-Left rotation
-        console.log("Left rotation on:", node.value);
-        return this.rotateLeft(node);
-      }
+    if (this.isLeftHeavy(node) && this.getBalance(node.left) < 0) {
+      console.log("LR case: ", node.left.value);
+      console.log("LR case on: ", node.value);
 
-      return node;
+      node.left = this.rotateLeft(node.left);
+      return this.rotateRight(node);
     }
+
+    if (this.isRightHeavy(node) && this.getBalance(node.right) > 0) {
+      console.log("RL case: ", node.right.value);
+      console.log("RL case on: ", node.value);
+
+      node.right = this.rotateRight(node.right);
+      return this.rotateLeft(node);
+    }
+    if (this.isLeftHeavy(node)) {
+      console.log("LL case on:", node.value);
+      return this.rotateRight(node);
+    }
+
+    if (this.isRightHeavy(node)) {
+      console.log("RR case on: ", node.value);
+      return this.rotateLeft(node);
+    }
+
+    return node;
+
+    // if (this.isLeftHeavy(node) && this.getBalance(node.left) < 0) {
+    //   // if () {
+    //   console.log("Left Balance: ", this.getBalance(node.left));
+
+    //   console.log("Left-Right case on:", node.left.value);
+    //   node.left = this.rotateLeft(node.left);
+    //   // Perform Left-Right rotation
+    //   console.log("Right rotation on:", node.value);
+    //   return this.rotateRight(node);
+    //   // }
+    // } else if (this.isRightHeavy(node) && this.getBalance(node.right) >= 0) {
+    //   // if () {
+    //   console.log("Right-Left case on:", node.right.value);
+    //   node.right = this.rotateRight(node.right);
+    //   // Perform Right-Left rotation
+    //   console.log("Left rotation on:", node.value);
+    //   return this.rotateLeft(node);
+    //   // }
+    // }
 
     // if (balance > 1 && this.getBalance(node.left) >= 0) {
     //   console.log("Left-Left case on:", node.value);
     //   this.rightRotate(node);
     // }
-
-    return node;
   }
   getHeight(node = this.root) {
     if (node === null) {
@@ -123,11 +198,11 @@ class AVLTree {
     }
     return this.getHeight(node.left) - this.getHeight(node.right);
   }
-  isLeftHeavy() {
-    return this.getBalance() > 1;
+  isLeftHeavy(node) {
+    return this.getBalance(node) > 1;
   }
-  isRightHeavy() {
-    return this.getBalance() < -1;
+  isRightHeavy(node) {
+    return this.getBalance(node) < -1;
   }
   printTree(node = this.root, indent = "") {
     if (node !== null) {
@@ -136,32 +211,157 @@ class AVLTree {
       this.printTree(node.left, indent + "   ");
     }
   }
+  printPretty(node = this.root, prefix = "", isLeft = true) {
+    if (node === null) return;
+
+    if (node.right) {
+      this.printPretty(node.right, prefix + (isLeft ? "│   " : "    "), false);
+    }
+
+    console.log(prefix + (isLeft ? "└── " : "┌── ") + node.value);
+
+    if (node.left) {
+      this.printPretty(node.left, prefix + (isLeft ? "    " : "│   "), true);
+    }
+  }
 }
 
-const avltree = new AVLTree();
-/* 
- Right Heavy: 10
-                 20
-                    30
- Left Heavy: 30
-          20
-        30
+// AVL Tree Insertion Test Cases with ASCII Trees for Reference
+
+/*
+===========================
+🌲 Right-Right (RR) Rotation
+===========================
+Insert:
+    avltree.insert(20);
+    avltree.insert(10);
+    avltree.insert(30);
+    avltree.insert(40);
+    avltree.insert(50);
+
+Before:
+       20
+     /    \
+   10      30
+             \
+             40
+               \
+               50
+
+After RR on 30:
+       20
+     /    \
+   10      40
+         /    \
+       30      50
 */
 
-avltree.insert(30);
-avltree.insert(20);
-avltree.insert(10);
+/*
+===========================
+🌲 Left-Left (LL) Rotation
+===========================
+Insert:
+    avltree.insert(50);
+    avltree.insert(40);
+    avltree.insert(30);
 
+Before:
+       50
+      /
+    40
+   /
+ 30
+
+After LL on 50:
+      40
+    /    \
+  30      50
+*/
+
+/*
+===========================
+🌲 Left-Right (LR) Rotation
+===========================
+Insert:
+    avltree.insert(30);
+    avltree.insert(10);
+    avltree.insert(20);
+
+Before:
+      30
+     /
+   10
+     \
+     20
+
+After LR:
+Step 1: Left Rotate on 10 → becomes:
+      30
+     /
+   20
+   /
+ 10
+
+Step 2: Right Rotate on 30 → Final:
+      20
+    /    \
+  10      30
+*/
+
+/*
+===========================
+🌲 Right-Left (RL) Rotation
+===========================
+Insert:
+    avltree.insert(10);
+    avltree.insert(30);
+    avltree.insert(20);
+
+Before:
+      10
+        \
+         30
+        /
+      20
+
+After RL:
+Step 1: Right Rotate on 30 → becomes:
+      10
+        \
+         20
+            \
+             30
+
+Step 2: Left Rotate on 10 → Final:
+      20
+    /    \
+  10      30
+*/
+
+// To run a test, uncomment the set of inserts:
+const avltree = new AVLTree();
+
+// Example for Left-Right case:
+// avltree.insert(30);
+// avltree.insert(10);
+// avltree.insert(20);
+
+// Example for Right-Left case:
+// avltree.insert(10);
+// avltree.insert(30);
+// avltree.insert(20);
+
+// Example for Right-Right case:
 // avltree.insert(20);
 // avltree.insert(10);
 // avltree.insert(30);
 // avltree.insert(40);
 // avltree.insert(50);
 
+// Example for Left-Left case:
 // avltree.insert(50);
-// avltree.printTree();
-console.log(JSON.stringify(avltree, null, 2));
-// console.log(avltree);
+// avltree.insert(40);
+// avltree.insert(30);
 
-console.log(avltree.getBalance());
-console.log(avltree.getHeight());
+// Print the tree
+avltree.printPretty();
