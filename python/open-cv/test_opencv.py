@@ -3,7 +3,7 @@ import mediapipe as mp
 import numpy as np
 
 # 1. READ THE IMAGE
-# cv2.imread() loads an image from a file.
+# cv2.imread() # loads an image from a file.
 # It returns the image as a NumPy array!
 # img = cv2.imread('test_image.png')
 

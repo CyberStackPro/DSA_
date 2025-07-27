@@ -64,6 +64,9 @@ normalized_pixels = pixel_values / 255.0
 # Notice the dtype will now be 'float64' because of the division
 # print("New data type:", normalized_pixels.dtype)
 
+
+# Indexing and Slicing (Getting Parts of Your Data)
+
 grid = np.array([
     [10, 11, 12, 13],
     [20, 21, 22, 23],
@@ -110,7 +113,11 @@ top_left_box = grid[0:2, 0:2]
 # 11   .  .  .  .  .  .  .  .  .  .  .  .
 
 frame = np.arange(144).reshape(12, 12)
-# print("Original Frame:\n", frame)
+cropped_frame = frame[3:8, 3:8]
+
+print("Original Frame:\n", frame)
+print("Cropped Frame:\n", cropped_frame)
+
 # 
 # The item is from row 3 up to (but not including) row 8,
 # and from column 3 up to (but not including) column 8.
@@ -128,7 +135,5 @@ a=np.array([
 [5,6,7,8],
 [9,10,11,12],
 [19,120,21,52],
-
-
 ])
-print(a[2:4,1:4])
+# print(a[2:4,1:4])
