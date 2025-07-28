@@ -21,7 +21,10 @@ class Heap {
   insert(item) {
     let arr = this.arr;
     arr.push(item);
-
+    this.bubbleUp();
+  }
+  bubbleUp() {
+    let arr = this.arr;
     let last_index = this.arr.length - 1; // 5
 
     while (last_index > 0 && arr[last_index] > arr[this.parent(last_index)]) {
@@ -36,6 +39,27 @@ class Heap {
         break;
       }
     }
+  }
+  remove() {
+    if (this.arr.length === 0) return null;
+
+    let lastIndex = this.arr.length - 1;
+    [this.arr[0], this.arr[lastIndex]] = [this.arr[lastIndex], this.arr[0]];
+
+    let removedItem = this.arr.pop();
+
+    let index = 0;
+    const length = this.arr.length;
+
+    while (true) {
+      if (last < this.arr[index]) {
+        console.log(this.arr[index]);
+
+        [this.arr[0], this.arr[last], this.arr[last], this.arr[0]];
+        index++;
+      } else break;
+    }
+    // console.log("SWAPPED: ", swaped);
   }
   swap(arr, i, j) {
     let temp = arr[i];
@@ -103,8 +127,6 @@ class Heap {
       );
     }
   }
-
-  remove() {}
 }
 const heap = new Heap();
 heap.insert(10);
@@ -116,8 +138,9 @@ heap.insert(5);
 
 // console.log(heap);
 // heap.getParent();
-// heap.printPretty();
 // console.log(heap.getNodes(20));
+// heap.remove();
+heap.printPretty();
 
 // function bringMaxToFront(arr) {
 //   let maxIndex = 0;
