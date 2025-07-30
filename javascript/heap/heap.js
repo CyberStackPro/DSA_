@@ -8,6 +8,7 @@
 class Heap {
   constructor() {
     this.arr = [];
+    this.size = 0;
   }
   left(i) {
     return 2 * i + 1;
@@ -19,108 +20,125 @@ class Heap {
     return Math.floor((i - 1) / 2);
   }
   insert(item) {
-    let arr = this.arr;
-    arr.push(item);
-    this.bubbleUp();
+    // let arr = this.arr;
+    // arr.push(item);
+    this.arr[this.size++] = item;
+    this.#bubbleUp();
   }
-  bubbleUp() {
-    let arr = this.arr;
-    let last_index = this.arr.length - 1; // 5
+  #bubbleUp() {
+    // let arr = this.arr;
+    // let last_index = this.arr.length - 1; // 5
+    let index = this.size - 1;
 
-    while (last_index > 0 && arr[last_index] > arr[this.parent(last_index)]) {
-      // true for  our example
-      let parent = this.parent(last_index); //1=20
+    while (index > 0 && this.arr[index] > this.arr[this.parent(index)]) {
+      let parentIndex = this.parent(index);
 
-      if (arr[last_index] > arr[parent]) {
+      if (this.arr[index] > this.arr[parentIndex]) {
         // [arr[last_index], arr[parent]] = [arr[parent], arr[last_index]];
-        this.swap(arr, last_index, parent);
-        last_index = parent;
+        this.#swap(this.arr, index, parentIndex);
+        index = parentIndex;
       } else {
         break;
       }
     }
   }
   remove() {
-    if (this.arr.length === 0) return null;
+    if (this.isEmpty()) return null;
 
-    let lastIndex = this.arr.length - 1;
-    [this.arr[0], this.arr[lastIndex]] = [this.arr[lastIndex], this.arr[0]];
+    // let lastIndex = this.arr.length - 1;
+    // [this.arr[0], this.arr[lastIndex]] = [this.arr[lastIndex], this.arr[0]];
 
-    let removedItem = this.arr.pop();
+    // this.arr.pop();
 
-    let index = 0;
-    const length = this.arr.length;
+    this.#swap(this.arr, 0, this.size - 1);
+    const removed = this.arr.pop();
+    this.size--;
 
-    while (true) {
-      if (last < this.arr[index]) {
-        console.log(this.arr[index]);
-
-        [this.arr[0], this.arr[last], this.arr[last], this.arr[0]];
-        index++;
-      } else break;
-    }
-    // console.log("SWAPPED: ", swaped);
+    this.#bubbleDown();
+    return removed;
   }
-  swap(arr, i, j) {
+  #bubbleDown() {
+    let index = 0;
+    while (true) {
+      let left = this.left(index); // 2 * i + 1 = 1
+      let right = this.right(index); // 2 * i + 2 = 2
+      let largest = index;
+
+      if (left < this.size && this.arr[left] > this.arr[largest]) {
+        largest = left;
+      }
+
+      if (right < this.size && this.arr[right] > this.arr[largest]) {
+        largest = right;
+      }
+      if (largest !== index) {
+        this.#swap(this.arr, index, largest);
+        index = largest;
+      } else {
+        break;
+      }
+    }
+  }
+  #swap(arr, i, j) {
     let temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
   }
+  isEmpty() {
+    return this.size === 0;
+  }
   printPretty(index = 0, prefix = "", isLeft = true) {
-    if (index >= this.arr.length) return;
+    if (index >= this.size) return;
 
     const rightIndex = this.right(index);
     const leftIndex = this.left(index);
 
-    if (rightIndex < this.arr.length) {
+    if (rightIndex < this.size) {
       this.printPretty(rightIndex, prefix + (isLeft ? "│   " : "    "), false);
     }
 
     console.log(prefix + (isLeft ? "└──" : "┌── ") + this.arr[index]);
 
-    if (leftIndex < this.arr.length) {
+    if (leftIndex < this.size) {
       this.printPretty(leftIndex, prefix + (isLeft ? "    " : "│   "), true);
     }
   }
 
   getParent() {
-    for (let i = 0; i < this.arr.length; i++) {
+    for (let i = 0; i < this.size; i++) {
       let parent = this.parent(i);
-      //   console.log(this.arr[i]);
-      console.log(`Parrent of ${this.arr[i]} is ${parent}`);
+      console.log(`Parent of ${this.arr[i]} is index ${parent}`);
     }
   }
+
   getNodes(value) {
     const index = this.arr.indexOf(value);
-    console.log(`Index of ${value} is: `, index);
-
-    if (value === -1) {
-      console.log("value is not on the heap!");
+    if (index === -1 || index >= this.size) {
+      console.log("Value is not in the heap.");
       return;
     }
+
     const leftIndex = this.left(index);
     const rightIndex = this.right(index);
 
     const leftValue =
-      this.arr[leftIndex] !== undefined ? this.arr[leftIndex] : "No Left Child";
+      leftIndex < this.size ? this.arr[leftIndex] : "No Left Child";
     const rightValue =
-      this.arr[rightIndex] !== undefined
-        ? this.arr[rightIndex]
-        : "No Right Child";
+      rightIndex < this.size ? this.arr[rightIndex] : "No Right Child";
 
     console.log(
       `Node ${value} has left child: ${leftValue}, right child: ${rightValue}`
     );
   }
+
   printAllNodesWithChildren() {
-    for (let i = 0; i < this.arr.length; i++) {
+    for (let i = 0; i < this.size; i++) {
       const leftIndex = this.left(i);
       const rightIndex = this.right(i);
 
-      const leftValue =
-        this.arr[leftIndex] !== undefined ? this.arr[leftIndex] : "No Left";
+      const leftValue = leftIndex < this.size ? this.arr[leftIndex] : "No Left";
       const rightValue =
-        this.arr[rightIndex] !== undefined ? this.arr[rightIndex] : "No Right";
+        rightIndex < this.size ? this.arr[rightIndex] : "No Right";
 
       console.log(
         `Node ${this.arr[i]} has left: ${leftValue}, right: ${rightValue}`
@@ -128,19 +146,41 @@ class Heap {
     }
   }
 }
+module.exports = { Heap };
+let numbers = [5, 3, 10, 1, 4, 2, 14];
 const heap = new Heap();
-heap.insert(10);
-heap.insert(20);
-heap.insert(15);
-heap.insert(30);
-heap.insert(40);
-heap.insert(5);
+// heap.insert(10);
+// heap.insert(20);
+// heap.insert(15);
+// heap.insert(30);
+// heap.insert(40);
+// heap.insert(5);
+
+// Heap sorting
+for (num of numbers) heap.insert(num);
+// while (!heap.isEmpty()) {
+//   console.log(heap.remove());
+// }
+// for descending order
+// for (let i = 0; i < numbers.length; i++) {
+//   numbers[i] = heap.remove(); // gets max first
+// }
+// console.log("Descending:", numbers);
+
+// for ascending order
+// for (let i = numbers.length - 1; i >= 0; i--) {
+//   numbers[i] = heap.remove();
+// }
+// numbers.reverse();
+// console.log("Ascending:", numbers);
 
 // console.log(heap);
 // heap.getParent();
 // console.log(heap.getNodes(20));
 // heap.remove();
-heap.printPretty();
+// console.log(heap.arr);
+
+// heap.printPretty();
 
 // function bringMaxToFront(arr) {
 //   let maxIndex = 0;
