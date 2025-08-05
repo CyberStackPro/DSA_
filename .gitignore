@@ -1,0 +1,31 @@
+# Ignore system/IDE files
+.DS_Store
+Thumbs.db
+
+# Ignore Python virtual environment
+python/.venv/
+
+# Ignore compiled Python files
+__pycache__/
+*.py[cod]
+
+# Ignore Rust target directory
+rust/target/
+
+# Ignore media files
+*.mp4
+*.mov
+*.avi
+
+# Ignore Python videos folder
+python/open-cv/video/
+
+# Ignore build artifacts and executables
+*.out
+*.exe
+
+# Ignore node_modules (if you add frontend later)
+node_modules/
+
+# Allow .gitignore and other hidden files
+!.gitignore
