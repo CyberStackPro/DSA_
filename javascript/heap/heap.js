@@ -42,23 +42,7 @@ class Heap {
       }
     }
   }
-  remove() {
-    if (this.isEmpty()) return null;
-
-    // let lastIndex = this.arr.length - 1;
-    // [this.arr[0], this.arr[lastIndex]] = [this.arr[lastIndex], this.arr[0]];
-
-    // this.arr.pop();
-
-    this.#swap(this.arr, 0, this.size - 1);
-    const removed = this.arr.pop();
-    this.size--;
-
-    this.#bubbleDown();
-    return removed;
-  }
-  #bubbleDown() {
-    let index = 0;
+  #bubbleDown(index = 0) {
     while (true) {
       let left = this.left(index); // 2 * i + 1 = 1
       let right = this.right(index); // 2 * i + 2 = 2
@@ -79,10 +63,44 @@ class Heap {
       }
     }
   }
+  remove() {
+    if (this.isEmpty()) return null;
+
+    // let lastIndex = this.arr.length - 1;
+    // [this.arr[0], this.arr[lastIndex]] = [this.arr[lastIndex], this.arr[0]];
+
+    // this.arr.pop();
+
+    this.#swap(this.arr, 0, this.size - 1);
+    const removed = this.arr.pop();
+    this.size--;
+
+    this.#bubbleDown();
+    return removed;
+  }
+  heapify(arr) {
+    this.arr = [...arr];
+    this.size = arr.length;
+    for (let i = Math.floor(this.size / 2) - 1; i >= 0; i--) {
+      this.#bubbleDown(i);
+    }
+  }
   #swap(arr, i, j) {
     let temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
+  }
+  max() {
+    if (this.isEmpty()) {
+      throw new Error("Heap is Empty");
+    }
+    return this.arr[0];
+  }
+  min() {
+    if (this.isEmpty()) {
+      throw new Error("Heap is Empty");
+    }
+    return this.arr.length - 1;
   }
   isEmpty() {
     return this.size === 0;
@@ -157,7 +175,7 @@ const heap = new Heap();
 // heap.insert(5);
 
 // Heap sorting
-for (num of numbers) heap.insert(num);
+// for (num of numbers) heap.insert(num);
 // while (!heap.isEmpty()) {
 //   console.log(heap.remove());
 // }
@@ -174,6 +192,13 @@ for (num of numbers) heap.insert(num);
 // numbers.reverse();
 // console.log("Ascending:", numbers);
 
+/* 
+  HEAPIFY
+
+*/
+// console.log(heap.heapify(numbers));
+// heap.heapify(numbers);
+// heap.printPretty();
 // console.log(heap);
 // heap.getParent();
 // console.log(heap.getNodes(20));

@@ -31,7 +31,7 @@ options = PoseLandmarkerOptions(
 def main():
     global next_person_id, tracked_people
     
-    cap = cv2.VideoCapture('video/shoplift-9.mp4')
+    cap = cv2.VideoCapture('video/person-1.mp4')
     
     with vision.PoseLandmarker.create_from_options(options) as landmarker:
         while cap.isOpened():
