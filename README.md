@@ -1,4 +1,4 @@
-# 🚀 DSA (Data Structures & Algorithms) Multi-Language Playground
+# DSA (Data Structures & Algorithms) Multi-Language Playground
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/yourusername/DSA)
 ![GitHub repo size](https://img.shields.io/github/repo-size/yourusername/DSA)
