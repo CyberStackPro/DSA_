@@ -1,9 +1,9 @@
 # DSA (Data Structures & Algorithms) Multi-Language Playground
 
-![GitHub last commit](https://img.shields.io/github/last-commit/yourusername/DSA)
-![GitHub repo size](https://img.shields.io/github/repo-size/yourusername/DSA)
-![Languages](https://img.shields.io/github/languages/count/yourusername/DSA)
-![License](https://img.shields.io/github/license/yourusername/DSA)
+![GitHub last commit](https://img.shields.io/github/last-commit/cyberstackpro/DSA)
+![GitHub repo size](https://img.shields.io/github/repo-size/cyberstackpro/DSA)
+![Languages](https://img.shields.io/github/languages/count/cyberstackpro/DSA)
+![License](https://img.shields.io/github/license/cyberstackpro/DSA)
 
 Welcome to my personal Data Structures & Algorithms repository.  
 Here I’m building, implementing, and experimenting with core computer science fundamentals in **multiple programming languages**, including **C, JavaScript, Python, and Rust**.
