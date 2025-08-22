@@ -1,5 +1,7 @@
 # DSA (Data Structures & Algorithms) Multi-Language Playground
 
+> Multi-language Data Structures & Algorithms playground: Learn, implement, and experiment with core DSA concepts in C, JavaScript, Python, and Rust.
+
 ![GitHub last commit](https://img.shields.io/github/last-commit/cyberstackpro/DSA_)
 ![GitHub repo size](https://img.shields.io/github/repo-size/cyberstackpro/DSA_)
 ![Languages](https://img.shields.io/github/languages/count/cyberstackpro/DSA_)
@@ -29,7 +31,6 @@ DSA/
 └── README.md
 ```
 
-
 Each language contains organized folders:
 - **Arrays**
 - **Stacks**
@@ -54,12 +55,12 @@ Each language contains organized folders:
 
 ## 🛠 Technologies Used
 
-| Language | Use Case |
-|----------|----------|
-| C        | Memory-level structures, performance testing |
-| JavaScript | Web-based DS logic, demos, & visualization potential |
-| Python   | Quick iteration, clarity, and readability |
-| Rust     | Performance and safe systems-level DSA |
+| Language    | Use Case                                         |
+|-------------|--------------------------------------------------|
+| C           | Memory-level structures, performance testing      |
+| JavaScript  | Web-based DS logic, demos, & visualization       |
+| Python      | Quick iteration, clarity, and readability        |
+| Rust        | Performance and safe systems-level DSA           |
 
 ---
 
