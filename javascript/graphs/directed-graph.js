@@ -82,6 +82,53 @@ class DirectedGraph {
     return nodeA.edges;
   }
 
+  // dfs(startNode) {
+  //   let visited = new Set();
+  //   let result = [];
+
+  //   this.#dfs(startNode, visited, result);
+
+  //   return result;
+  // }
+  // #dfs(node, visited, result) {
+  //   visited.add(node);
+  //   result.push(node);
+
+  //   for (let neighbor of this.getNeighbors(node)) {
+  //     if (!visited.has(neighbor)) {
+  //       this.#dfs(neighbor, visited, result);
+  //     }
+  //   }
+  // }
+  dfs(start) {
+    if (!this.adjacencyList.has(start)) {
+      throw new Error(`Start node "${start}" not found`);
+    }
+
+    const visited = new Set();
+    const order = [];
+    const stack = [start];
+
+    while (stack.length) {
+      const current = stack.pop();
+      if (visited.has(current)) continue;
+
+      visited.add(current);
+      order.push(current);
+
+      const neighbors = this.getNeighbors(current);
+
+      for (let i = neighbors.length - 1; i >= 0; i--) {
+        const neighbor = neighbors[i];
+        if (!visited.has(neighbor)) {
+          stack.push(neighbor);
+        }
+      }
+    }
+    return order;
+  }
+  bfs(startNode) {}
+
   size() {
     return this.adjacencyList.size;
   }
@@ -109,7 +156,9 @@ graph.addEdge("A", "B");
 graph.addEdge("A", "C");
 graph.addEdge("B", "D");
 
-console.log(graph.numberOfEdges());
+console.log(graph.dfs("A"));
+
+// console.log(graph.numberOfEdges());
 
 graph.printPretty();
 // console.dir(graph, { depth: null });
