@@ -106,8 +106,8 @@ class DirectedGraph {
     }
 
     const visited = new Set();
-    const order = [];
     const stack = [start];
+    const order = [];
 
     while (stack.length) {
       const current = stack.pop();
@@ -127,7 +127,29 @@ class DirectedGraph {
     }
     return order;
   }
-  bfs(startNode) {}
+  bfs(startNode) {
+    let visited = new Set();
+    let result = [];
+    let queue = [];
+
+    visited.add(startNode);
+    queue.push(startNode);
+
+    while (queue.length) {
+      const current = queue.shift();
+
+      result.push(current);
+
+      const neighbors = this.getNeighbors(current);
+
+      for (let i = 0; i < neighbors.length; i++) {
+        const neighbor = neighbors[i];
+        if (!visited.has(neighbor)) queue.push(neighbor);
+      }
+    }
+
+    return result;
+  }
 
   size() {
     return this.adjacencyList.size;
@@ -157,6 +179,7 @@ graph.addEdge("A", "C");
 graph.addEdge("B", "D");
 
 console.log(graph.dfs("A"));
+console.log(graph.bfs("A"));
 
 // console.log(graph.numberOfEdges());
 
