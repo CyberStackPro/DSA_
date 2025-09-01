@@ -150,6 +150,28 @@ class DirectedGraph {
 
     return result;
   }
+  topologicalSort() {
+    let stack = [];
+    let visited = new Set();
+
+    for (let node of this.adjacencyList.keys()) {
+      if (!visited.has(node)) {
+        this.#topologicalSort(node, visited, stack);
+      }
+    }
+
+    return stack.reverse();
+  }
+  #topologicalSort(node, visited, stack) {
+    visited.add(node);
+
+    for (let neighbor of this.getNeighbors(node)) {
+      if (!visited.has(neighbor)) {
+        this.#topologicalSort(neighbor, visited, stack);
+      }
+    }
+    stack.push(node);
+  }
 
   size() {
     return this.adjacencyList.size;
@@ -178,8 +200,24 @@ graph.addEdge("A", "B");
 graph.addEdge("A", "C");
 graph.addEdge("B", "D");
 
-console.log(graph.dfs("A"));
-console.log(graph.bfs("A"));
+// graph.addNode(5);
+// graph.addNode(2);
+// graph.addNode(0);
+// graph.addNode(4);
+// graph.addNode(3);
+// graph.addNode(1);
+
+// graph.addEdge(5, 0);
+// graph.addEdge(5, 2);
+// graph.addEdge(4, 0);
+// graph.addEdge(4, 1);
+// graph.addEdge(2, 3);
+// graph.addEdge(3, 1);
+
+// console.log(graph.dfs("A"));
+// console.log(graph.bfs("A"));
+
+console.log(graph.topologicalSort());
 
 // console.log(graph.numberOfEdges());
 
