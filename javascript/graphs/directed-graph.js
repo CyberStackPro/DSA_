@@ -173,6 +173,44 @@ class DirectedGraph {
     stack.push(node);
   }
 
+  hasCycle() {
+    const all = new Set();
+    for (let node of this.adjacencyList.keys()) {
+      all.add(node);
+    }
+    const visiting = new Set();
+    const visited = new Set();
+
+    while (all.size > 0) {
+      let current = all.values().next().value;
+
+      console.log("CURRENT: ", current);
+
+      if (this.#hasCycle(current, all, visiting, visited)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  #hasCycle(node, all, visiting, visited) {
+    all.delete(node);
+    visiting.add(node);
+
+    for (let neighbor of this.getNeighbors(node)) {
+      if (visiting.has(neighbor)) return true;
+      if (!visited.has(neighbor)) {
+        let result = this.#hasCycle(neighbor, all, visiting, visited);
+        if (result) return true;
+      }
+    }
+
+    visiting.delete(node);
+    visited.add(node);
+
+    return false;
+  }
+
   size() {
     return this.adjacencyList.size;
   }
@@ -194,11 +232,11 @@ const graph = new DirectedGraph();
 graph.addNode("A");
 graph.addNode("B");
 graph.addNode("C");
-graph.addNode("D");
+// graph.addNode("D");
 
 graph.addEdge("A", "B");
-graph.addEdge("A", "C");
-graph.addEdge("B", "D");
+graph.addEdge("B", "C");
+graph.addEdge("C", "A");
 
 // graph.addNode(5);
 // graph.addNode(2);
@@ -217,7 +255,8 @@ graph.addEdge("B", "D");
 // console.log(graph.dfs("A"));
 // console.log(graph.bfs("A"));
 
-console.log(graph.topologicalSort());
+// console.log(graph.topologicalSort());
+console.log(graph.hasCycle());
 
 // console.log(graph.numberOfEdges());
 
