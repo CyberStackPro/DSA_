@@ -52,6 +52,9 @@ class WeightedGraph {
       console.log(`${key} --> ${connections}`);
     }
   }
+  getShortestDistance(from, to) {
+    // const queue = new PromiseRejectionEvent
+  }
 }
 
 const wgraph = new WeightedGraph();
@@ -61,6 +64,7 @@ wgraph.addNode("B");
 wgraph.addNode("C");
 
 wgraph.addEdge("A", "B", 2);
+wgraph.addEdge("A", "C", 3);
 
 wgraph.printPretty();
 // console.log(wgraph);
