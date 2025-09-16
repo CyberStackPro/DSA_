@@ -226,6 +226,12 @@ class AVLTree {
   }
 }
 
+// let avl = new AVLTree();
+// [30, 20, 10].forEach(v => avl.insert(v)); // LL
+// [10, 20, 30].forEach(v => avl.insert(v)); // RR
+// [30, 10, 20].forEach(v => avl.insert(v)); // LR
+// [10, 30, 20].forEach(v => avl.insert(v)); // RL
+
 // AVL Tree Insertion Test Cases with ASCII Trees for Reference
 
 /*

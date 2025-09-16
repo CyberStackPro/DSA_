@@ -1,3 +1,5 @@
+const { Queue, PrirorityQueue } = require("./queue.js");
+
 class WeightedNode {
   constructor(value) {
     this.value = value;
@@ -53,7 +55,7 @@ class WeightedGraph {
     }
   }
   getShortestDistance(from, to) {
-    // const queue = new PromiseRejectionEvent
+    const queue = new Queue();
   }
 }
 
